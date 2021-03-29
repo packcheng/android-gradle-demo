@@ -1,2 +1,2 @@
-include ':app'
+include ':flavor', ':FileOperate'
 rootProject.name = "BuildDemo"

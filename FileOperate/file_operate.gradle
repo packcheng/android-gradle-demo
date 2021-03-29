@@ -1,0 +1,28 @@
+// 文件操作
+
+/**
+ * 文件Copy
+ */
+task copyFile(type: Copy) {
+    doFirst { println "copy file from: ${projectDir}/srcFile/" }
+    doLast { println "copy file to: ${projectDir}/DestFile" }
+
+    from "${projectDir}/srcFile/srcA.txt", "${projectDir}/srcFile/srcB.md"
+    into "${projectDir}/DestFile"
+}
+
+/**
+ * 删除指定目录的文件
+ */
+task cleanCopy(type: Delete) {
+    doFirst {
+        println "清除复制后的目录: ${projectDir}/DestFile"
+    }
+
+    delete "${projectDir}/DestFile"
+}
+
+/**
+ * Task 关联
+ */
+copyFile.dependsOn(cleanCopy)
