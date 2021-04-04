@@ -1,0 +1,51 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+sourceSets{
+    main{
+        groovy{
+            srcDir 'src/main/groovy'
+        }
+        resources{
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+uploadArchives{
+    repositories {
+        mavenDeployer{
+            pom.groupId = 'com.packcheng'
+            pom.artifactId = 'my-plugin'
+            pom.version = 1.0
+            repository(url: uri('../repository'))
+        }
+    }
+}
+
+afterEvaluate {
+    project->
+        println('afterEvaluate')
+        project.tasks.each{
+            task->
+                if("uploadArchives" == task.name){
+                    task.doLast{
+                        println('在 uploadArchives task 任务之后，删除本地build目录')
+                        def pluginBuildDir = project.buildDir
+                        println("需要删除的目录为: $pluginBuildDir")
+
+                        delete pluginBuildDir
+                    }
+                }
+        }
+}
