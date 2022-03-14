@@ -141,3 +141,15 @@ apply plugin: 'xxx'
 ```
 
 **此处的xxx需要和自定义插件Module/main/src/resourse/META-INF/gradle-plugins/xxx.properties中的文件名保持一致。**
+
+# 自定义Task常用注解
+（1）@Input：对应的是一些基本的数据类型或者是实现了Serializable的类型，在build.gradle中可直接按照对应的类型赋值即可；
+（2）@InputFile：对应输入的要求是一个文件类型，在build.gradle中可通过file("文件路径")的方式直接赋值，赋值的类型必须保持一致，否则会编译不通过，抛出“ Cannot cast ......”
+（3）@InputDirectory：对应的要求是一个文件夹类型，在build.gradle中可通过file("文件夹路径")的方式直接赋值，赋值的类型必须保持一致，否则会编译不通过，抛出“ Cannot cast ......”
+（4）@InputFiles：对应的要求是一个文件列表，包括文件和目录，对应类型为Iterable，在build.gradle中可通过files()的方式直接赋值
+（5）@OutpuFile：一个输出文件，对应类型为File
+（6）@OutputDirectory：一个输出文件夹，对应类型为File
+（7）@OutputFiles：对应输出文件列表，对应类型为Map或Iterable
+（8）@OutputDirectories：对应输出文件夹列表，对应类型为Map或Iterable
+（9）@Incremental：通常与@InputFiles和@InputDirectory配合使用，用来跟踪文件的变化
+（10）@TaskAction：该Task具体执行的任务内容

@@ -8,9 +8,18 @@ def beginOfConfig
 def configHasBegin = false
 def beginOfProjectConfig = new HashMap()
 def beginOfProjectExcute
+gradle.settingsEvaluated {
+    println 'settingsEvaluated-> setting.gradle文件执行完毕'
+}
 gradle.projectsLoaded {
+    println 'projectsLoaded-> Project初始化完成'
     println '初始化阶段，耗时：' + (System.currentTimeMillis() -
             beginOfSetting) + 'ms'
+
+    println 'rootProject-> ' + rootProject.name
+    gradle.allprojects {
+        println 'allprojects: 之 ' + it.name
+    }
 }
 gradle.beforeProject { project ->
     if (!configHasBegin) {
@@ -24,10 +33,18 @@ gradle.afterProject { project ->
     println '配置阶段，' + project + '耗时：' +
             (System.currentTimeMillis() - begin) + 'ms'
 }
+gradle.projectsEvaluated {
+    println 'projectsEvaluated->所有build.gradle文件执行完毕'
+}
 gradle.taskGraph.whenReady {
     println '配置阶段，总共耗时：' + (System.currentTimeMillis() -
             beginOfConfig) + 'ms'
     beginOfProjectExcute = System.currentTimeMillis()
+
+    List<Task> tasks = gradle.taskGraph.allTasks
+    tasks.forEach{
+        println "tasks: ${it.project.name} -> ${it.name}"
+    }
 }
 gradle.taskGraph.beforeTask { task ->
     task.doFirst {

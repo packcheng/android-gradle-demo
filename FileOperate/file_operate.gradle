@@ -9,6 +9,12 @@ task copyFile(type: Copy) {
 
     from "${projectDir}/srcFile/srcA.txt", "${projectDir}/srcFile/srcB.md"
     into "${projectDir}/DestFile"
+
+//    rename {
+//            //重命名
+//        String fileName ->
+//            fileName = "copyTaskOk.txt"
+//    }
 }
 
 /**
@@ -26,3 +32,19 @@ task cleanCopy(type: Delete) {
  * Task 关联
  */
 copyFile.dependsOn(cleanCopy)
+
+/**
+ * Sync：与Copy类似，区别在于当执行该Task的时候，会将源文件复制到目标目录，
+ * 目标目录下所有的非复制文件将会被删除，除非指定Sync.preserve{}来增加匹配规则，保证符合匹配规则的文件不被删除。
+ */
+task syncTask(type: Sync) {
+    from 'copyTask.txt'
+    into 'src/main/synctest'
+    preserve {
+        //保持该文件不被覆盖
+        exclude 'src/main/synctest/syncexist.txt'
+    }
+    doLast {
+        println(prefix + "syncTask do last")
+    }
+}
