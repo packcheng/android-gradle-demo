@@ -35,7 +35,6 @@ uploadArchives{
 
 afterEvaluate {
     project->
-        println('afterEvaluate')
         project.tasks.each{
             task->
                 if("uploadArchives" == task.name){

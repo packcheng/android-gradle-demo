@@ -34,9 +34,9 @@ task clean(type: Delete) {
 }
 
 
-project.afterEvaluate {
-    println 'Root project afterEvaluate'
-}
+//project.afterEvaluate {
+//    println 'Root project afterEvaluate'
+//}
 
 // 基础语法测试
 //apply from: './script/grammar.gradle'
