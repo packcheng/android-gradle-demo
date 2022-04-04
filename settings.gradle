@@ -1,4 +1,4 @@
-include ':flavor', ':FileOperate', ":plugin"
+include ':flavor', ':FileOperate', ":plugin", ":routerapp",":router-gradle-plugin"
 rootProject.name = "BuildDemo"
 
 // 生命周期信息统计
