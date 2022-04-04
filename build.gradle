@@ -37,3 +37,9 @@ task clean(type: Delete) {
 project.afterEvaluate {
     println 'Root project afterEvaluate'
 }
+
+// 基础语法测试
+//apply from: './script/grammar.gradle'
+
+// Task依赖测试
+//apply from:"./script/task_depends.gradle"

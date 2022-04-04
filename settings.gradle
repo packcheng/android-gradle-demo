@@ -1,61 +1,8 @@
 include ':flavor', ':FileOperate', ":plugin"
 rootProject.name = "BuildDemo"
 
-// 打印耗时时间
+// 生命周期信息统计
+//apply from: './script/build-lifecycler.gradle'
 
-long beginOfSetting = System.currentTimeMillis()
-def beginOfConfig
-def configHasBegin = false
-def beginOfProjectConfig = new HashMap()
-def beginOfProjectExcute
-gradle.settingsEvaluated {
-    println 'settingsEvaluated-> setting.gradle文件执行完毕'
-}
-gradle.projectsLoaded {
-    println 'projectsLoaded-> Project初始化完成'
-    println '初始化阶段，耗时：' + (System.currentTimeMillis() -
-            beginOfSetting) + 'ms'
-
-    println 'rootProject-> ' + rootProject.name
-    gradle.allprojects {
-        println 'allprojects: 之 ' + it.name
-    }
-}
-gradle.beforeProject { project ->
-    if (!configHasBegin) {
-        configHasBegin = true
-        beginOfConfig = System.currentTimeMillis()
-    }
-    beginOfProjectConfig.put(project, System.currentTimeMillis())
-}
-gradle.afterProject { project ->
-    def begin = beginOfProjectConfig.get(project)
-    println '配置阶段，' + project + '耗时：' +
-            (System.currentTimeMillis() - begin) + 'ms'
-}
-gradle.projectsEvaluated {
-    println 'projectsEvaluated->所有build.gradle文件执行完毕'
-}
-gradle.taskGraph.whenReady {
-    println '配置阶段，总共耗时：' + (System.currentTimeMillis() -
-            beginOfConfig) + 'ms'
-    beginOfProjectExcute = System.currentTimeMillis()
-
-    List<Task> tasks = gradle.taskGraph.allTasks
-    tasks.forEach{
-        println "tasks: ${it.project.name} -> ${it.name}"
-    }
-}
-gradle.taskGraph.beforeTask { task ->
-    task.doFirst {
-        task.ext.beginOfTask = System.currentTimeMillis()
-    }
-    task.doLast {
-        println '执行阶段，' + task + '耗时：' +
-                (System.currentTimeMillis() - task.beginOfTask) + 'ms'
-    }
-}
-gradle.buildFinished {
-    println '执行阶段，耗时：' + (System.currentTimeMillis() -
-            beginOfProjectExcute) + 'ms'
-}
+// 构建生命周期监听
+//apply from: './script/build-listener.gradle'

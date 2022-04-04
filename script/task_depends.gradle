@@ -1,0 +1,33 @@
+// Task 依赖配置
+task firstTask {
+    doFirst {
+        println "firstTask"
+    }
+}
+task secondTask {
+    doFirst {
+        println "secondTask"
+    }
+}
+
+// 依赖方式0
+task thirdTask{
+    dependsOn secondTask
+    doLast {
+        println "thirdTask"
+    }
+}
+
+// 依赖方式一
+//preBuild.dependsOn(secondTask)
+
+secondTask.dependsOn(firstTask)
+
+// 依赖方式二
+//afterEvaluate {
+//    project.getTasks().matching {
+//        Task task -> (task.name == "preBuild")
+//    }.each {
+//        it.dependsOn(firstTask, secondTask)
+//    }
+//}

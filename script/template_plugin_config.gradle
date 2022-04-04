@@ -1,0 +1,5 @@
+// template-plugin 配置信息
+templateSettingExtension{
+    compileSdk= '1.1.0'
+    interfaceSourceDir  = file("src/main/java/com")
+}

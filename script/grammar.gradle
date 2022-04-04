@@ -1,0 +1,113 @@
+// 基础语法
+println("---------------- 基础语法 --------------")
+
+// 基本输出
+println("Hello world, gradle!")
+
+// 支持数据类型 byte short int long float double char string
+
+// 变量定义
+int intA = 100
+def strA = "1000"
+println("intA: $intA, strA: $strA")
+
+// 数组定义
+def array = ["aaa","bbb", "ccc"]
+println("array: $array")
+
+// Map定义
+def map = ["name1":"value1", "name2":"value2"]
+println("map: $map")
+
+// 遍历
+array.each {
+    println("array item: $it")
+}
+map.each {
+    println("map item, key: ${it.key}, value: ${it.value}")
+}
+println("map's value of key \"name1\" is: ${map["name1"]}")
+
+// 方法定义
+def printName(String name){
+    println("printName arg is: $name")
+}
+printName("zbc")
+
+// 闭包定义
+// 没有参数
+def closure = {
+    println("closure with no arg")
+}
+// 一个默认参数 it
+def closure1 = {
+    println("closure with default arg it: $it")
+}
+// 一个命名参数
+def closure2 = {String name->
+    println("closure with name arg name: $name")
+}
+// 两个参数
+def closure3 = {String name, int age->
+    println("closure with arg name: $name, age: $age")
+}
+closure()
+closure1("it")
+closure2("zbc")
+closure3("zbc", 19)
+
+// 自定义DSL
+class MyDefaultConfig{
+    private int targetSdkVersion
+    private String versionName
+
+    def targetSdkVersion(int targetSdkVersion){
+        this.targetSdkVersion = targetSdkVersion
+    }
+
+    def versionName(String versionName){
+        this.versionName = versionName
+    }
+
+    @Override
+    String toString() {
+        return "MyDefaultConfig{targetSdkVersion=$targetSdkVersion, versionName=$versionName}"
+    }
+}
+
+class  MyAndroid{
+    private int compileSdkVersion
+    private MyDefaultConfig defaultConfig
+
+    MyAndroid(){
+        this.defaultConfig = new MyDefaultConfig()
+    }
+
+    def compileSdkVersion(int compileSdkVersion){
+        this.compileSdkVersion = compileSdkVersion
+    }
+
+   def defaultConfig(Closure c){
+        c.setDelegate(defaultConfig)
+        c.call()
+    }
+
+    @Override
+    String toString() {
+        return "MyAndroid{compileSdkVersion=$compileSdkVersion, defaultConfig=$defaultConfig}"
+    }
+}
+def myAndroid = {
+    compileSdkVersion 20
+    defaultConfig {
+        targetSdkVersion 30
+        versionName "1.0"
+    }
+}
+
+MyAndroid myAndroidTarget = new MyAndroid()
+myAndroid.setDelegate(myAndroidTarget)
+myAndroid.call()
+println("myAndroid $myAndroidTarget")
+
+println("---------------- 基础语法 --------------\n")

@@ -1,0 +1,20 @@
+// 构建生命周期监听
+gradle.addBuildListener(new BuildAdapter(){
+    @Override
+    void settingsEvaluated(Settings settings) {
+        super.settingsEvaluated(settings)
+        println("BuildAdapter: 初始化阶段完成")
+    }
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {
+        super.projectsEvaluated(gradle)
+        println("BuildAdapter: 配置完成")
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        super.buildFinished(result)
+        println("BuildAdapter: 构建完成")
+    }
+})

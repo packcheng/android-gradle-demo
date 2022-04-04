@@ -1,0 +1,6 @@
+// packcheng-plugin 配置信息
+myConfig {
+    appName = 'hello app name'
+    versionCode = 12.0
+    versionName = 'hello version'
+}
