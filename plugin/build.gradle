@@ -1,5 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
 
 dependencies {
     implementation gradleApi()
@@ -22,16 +21,7 @@ sourceSets{
     }
 }
 
-uploadArchives{
-    repositories {
-        mavenDeployer{
-            pom.groupId = 'com.packcheng'
-            pom.artifactId = 'my-plugin'
-            pom.version = 1.0
-            repository(url: uri('../repository'))
-        }
-    }
-}
+apply from: '../script/maven-publish.gradle'
 
 afterEvaluate {
     project->

@@ -1,0 +1,17 @@
+apply plugin: 'java'
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+//    implementation project(':router-annotations')
+    implementation 'com.packcheng.router:router-annotations:1.0.0'
+
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+
+    implementation 'com.squareup:javapoet:1.12.1'
+}
+
+apply from: '../script/maven-publish.gradle'

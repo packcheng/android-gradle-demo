@@ -15,7 +15,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // 引入自定义插件
-        classpath "com.packcheng:my-plugin:1.0"
+        classpath "com.packcheng:my-plugin:1.0.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,7 +29,7 @@ allprojects {
 
         // 引入自己的插件仓库
         maven{
-            url uri('./repository')
+            url uri(rootProject.file("repository"))
         }
     }
 }

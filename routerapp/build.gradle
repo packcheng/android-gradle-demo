@@ -35,6 +35,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.packcheng.router:router-annotations:1.0.0'
+    annotationProcessor 'com.packcheng.router:router-processor:1.0.0'
 }
 
 // 使用自定义路由插件

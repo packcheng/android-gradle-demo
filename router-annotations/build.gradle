@@ -1,0 +1,9 @@
+// 应用Java插件
+apply plugin: "java"
+// 设置源码兼容性
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+apply from: '../script/maven-publish.gradle'
