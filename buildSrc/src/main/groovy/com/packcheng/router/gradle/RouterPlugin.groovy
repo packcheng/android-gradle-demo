@@ -14,15 +14,6 @@ class RouterPlugin implements Plugin<Project> {
     void apply(Project project) {
         println("I am from RouterPlugin, apply from project: ${project.name}")
 
-        // 注册Transform
-        if (project.plugins.hasPlugin(AppPlugin)) {
-            AppExtension appExtension = project.extensions.getByType(AppExtension)
-            Transform transform = new RouterMappingTransform()
-            appExtension.registerTransform(transform)
-        }
-
-        project.getExtensions().create("router", RouterExtension)
-
         // 1. 自动配置传递参数到注解处理器中
         if (project.extensions.findByName("kapt") != null) {
             println("自动配置传递参数到注解处理器中...")
@@ -39,6 +30,20 @@ class RouterPlugin implements Plugin<Project> {
                 routerMappingDir.deleteDir()
             }
         }
+
+        if (!project.plugins.hasPlugin(AppPlugin)) {
+            return
+        }
+
+        // ***** APP 模块才做以下操作 *******
+
+        // 注册Transform
+        AppExtension appExtension = project.extensions.getByType(AppExtension)
+        Transform transform = new RouterMappingTransform()
+        appExtension.registerTransform(transform)
+
+        // 创建WIKI配置扩展
+        project.getExtensions().create("router", RouterExtension)
 
         project.afterEvaluate {
             RouterExtension extension = project["router"]

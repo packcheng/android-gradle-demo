@@ -4,6 +4,9 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 
+import java.util.jar.JarOutputStream
+import java.util.zip.ZipEntry
+
 /**
  * 自定义Transform
  *
@@ -88,6 +91,8 @@ class RouterMappingTransform extends Transform {
         //如果不带super，就不会生成dex文件
         super.transform(transformInvocation)
 
+        RouterMappingCollector routerMappingCollector = new RouterMappingCollector()
+
         // 1. 遍历所有的Input
         transformInvocation.inputs.each {
             // 文件夹类型
@@ -98,6 +103,7 @@ class RouterMappingTransform extends Transform {
                                 dirInput.scopes,
                                 Format.DIRECTORY)
                 // 2. 对Input进行二次处理
+                routerMappingCollector.collect(dirInput.file)
                 // 3. 将input拷贝到目标目录
                 FileUtils.copyDirectory(dirInput.file, destDir)
             }
@@ -110,9 +116,36 @@ class RouterMappingTransform extends Transform {
                                 jarInput.scopes,
                                 Format.JAR)
                 // 2. 对Input进行二次处理
+                routerMappingCollector.collectFromJarFile(jarInput.file)
                 // 3. 将input拷贝到目标目录
                 FileUtils.copyFile(jarInput.file, jarDest)
             }
         }
+
+        println(getName() + ">>>> All Mapping class name is: ${routerMappingCollector.getMappingClassNames()}")
+
+        File mappingJarFile = transformInvocation.outputProvider
+                .getContentLocation("router-mapping",
+                        getOutputTypes(),
+                        getScopes(),
+                        Format.JAR)
+        println("${getName()} >>> mappingJarFile = $mappingJarFile")
+
+        if(!mappingJarFile.parentFile.exists()){
+            mappingJarFile.parentFile.mkdirs()
+        }
+        if(mappingJarFile.exists()){
+            mappingJarFile.delete()
+        }
+
+        // 将生成的字节码生成本地文件
+        FileOutputStream fos = new FileOutputStream(mappingJarFile)
+        JarOutputStream jos = new JarOutputStream(fos)
+        ZipEntry zipEntry =new ZipEntry(RouterMappingByteCodeBuilder.CLASS_NAME + ".class")
+        jos.putNextEntry(zipEntry)
+        jos.write(RouterMappingByteCodeBuilder.get(routerMappingCollector.getMappingClassNames()))
+        jos.closeEntry()
+        jos.close()
+        fos.close()
     }
 }
