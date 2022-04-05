@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 30
 
@@ -25,6 +28,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // 向注解处理器传递参数-使用插件自动实现配置
+//    kapt {
+//        arguments {
+//            arg("root_project_dir", rootProject.projectDir.absolutePath)
+//        }
+//    }
 }
 
 dependencies {
@@ -37,11 +47,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'com.packcheng.router:router-annotations:1.0.0'
-    annotationProcessor 'com.packcheng.router:router-processor:1.0.0'
+    kapt 'com.packcheng.router:router-processor:1.0.0'
 }
 
 // 使用自定义路由插件
 apply plugin: "com.packcheng.router"
 router {
-    wikiDir getRootDir().absolutePath
+    wikiDir getRootDir().absolutePath.toString()+"/"
 }

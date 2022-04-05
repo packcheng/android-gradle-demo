@@ -12,6 +12,11 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
 
     implementation 'com.squareup:javapoet:1.12.1'
+
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'org.apache.commons:commons-collections4:4.1'
+
+    implementation 'com.alibaba:fastjson:1.2.48'
 }
 
 apply from: '../script/maven-publish.gradle'
