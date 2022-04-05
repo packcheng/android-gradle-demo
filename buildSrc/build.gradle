@@ -3,6 +3,7 @@ apply plugin: "groovy"
 
 // 声明仓库的地址
 repositories {
+    google()
     jcenter()
 }
 
@@ -10,6 +11,11 @@ repositories {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+
+    implementation 'org.ow2.asm:asm:7.1'
+    implementation 'org.ow2.asm:asm-util:7.1'
+    implementation 'org.ow2.asm:asm-commons:7.1'
+    implementation 'com.android.tools.build:gradle:4.1.0'
 }
 
 // 调用maven插件，用于发布插件

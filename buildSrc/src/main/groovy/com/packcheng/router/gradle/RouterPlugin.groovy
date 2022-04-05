@@ -1,5 +1,8 @@
 package com.packcheng.router.gradle
 
+import com.android.build.api.transform.Transform
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.AppPlugin
 import groovy.json.JsonSlurper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,6 +13,14 @@ class RouterPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         println("I am from RouterPlugin, apply from project: ${project.name}")
+
+        // 注册Transform
+        if (project.plugins.hasPlugin(AppPlugin)) {
+            AppExtension appExtension = project.extensions.getByType(AppExtension)
+            Transform transform = new RouterMappingTransform()
+            appExtension.registerTransform(transform)
+        }
+
         project.getExtensions().create("router", RouterExtension)
 
         // 1. 自动配置传递参数到注解处理器中
@@ -81,13 +92,13 @@ class RouterPlugin implements Plugin<Project> {
         }
 
         File wikiFileDir = new File(wikiFilePath)
-        if(!wikiFileDir.exists()){
+        if (!wikiFileDir.exists()) {
             wikiFileDir.mkdirs()
         }
 
         final String wikiFileName = "页面文档.md"
         File wikiFile = new File(wikiFileDir, wikiFileName)
-        if(wikiFile.exists()){
+        if (wikiFile.exists()) {
             wikiFile.delete()
         }
         wikiFile.write(markDownBuilder.toString())
