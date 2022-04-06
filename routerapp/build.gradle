@@ -60,3 +60,13 @@ apply plugin: "com.packcheng.router"
 router {
     wikiDir getRootDir().absolutePath.toString()+"/"
 }
+//
+//// 依赖安全性监测
+//configurations.all {
+//    resolutionStrategy.eachDependency{details->
+//        String depName = details.requested.toString()
+//        if(depName.contains("com.google.android.material")){
+//            throw new RuntimeException("不能使用依赖库：$depName")
+//        }
+//    }
+//}
