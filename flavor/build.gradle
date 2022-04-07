@@ -7,6 +7,7 @@ plugins {
 
 //apply from: "../script/packcheng_plugin_config.gradle"
 //apply from: "../script/template_plugin_config.gradle"
+//apply from: "../script/my_android_config.gradle"
 
 android {
     compileSdkVersion 30

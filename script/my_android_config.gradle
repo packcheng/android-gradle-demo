@@ -1,0 +1,18 @@
+// MyAndroid plugin使用
+apply plugin: 'my-application'
+
+myAndroid {
+    compileSdkVersion = "1.0.0"
+    buildToolsVersion = "29.0.2"
+
+    defaultConfig {
+        applicationId = "com.packcheng.test"
+        minSdkVersion = "26"
+    }
+
+    buildTypes {
+        dev {
+            signingConfig = true
+        }
+    }
+}
