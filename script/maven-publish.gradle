@@ -20,6 +20,7 @@ println("uploadArchives >>> POM_URL = $ROOT_POM_URL")
 println("uploadArchives >>> POM_GROUP_ID = $POM_GROUP_ID")
 println("uploadArchives >>> POM_VERSION_NAME = $POM_VERSION_NAME")
 println("uploadArchives >>> POM_ARTIFACT_ID = $POM_ARTIFACT_ID")
+println("")
 
 uploadArchives {
     repositories {

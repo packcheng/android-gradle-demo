@@ -12,7 +12,7 @@ class MyPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        println 'My Plugin'
+        println 'apply My Plugin'
         project.extensions.create("myConfig", MyConfig)
 
         assert null != project.extensions.myConfig

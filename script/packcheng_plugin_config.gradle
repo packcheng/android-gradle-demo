@@ -1,6 +1,14 @@
 // packcheng-plugin 配置信息
+println('>>> before apply packcheng-plugin')
+
+apply plugin: 'packcheng-plugin'
+
+println('>>> after apply packcheng-plugin and before configure packcheng-plugin')
+
 myConfig {
     appName = 'hello app name'
     versionCode = 12.0
     versionName = 'hello version'
 }
+
+println('>>> after configure packcheng-plugin')

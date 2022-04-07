@@ -2,9 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-//    id 'packcheng-plugin'
 //    id 'rename-release-apk'
-//    id 'template-plugin'
 }
 
 //apply from: "../script/packcheng_plugin_config.gradle"
