@@ -1,4 +1,6 @@
-apply plugin: 'java'
+import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.LibraryPlugin
+
 apply plugin: 'maven-publish'
 
 // 获取根gradle.properties的公共配置
@@ -7,6 +9,9 @@ rootProperties.load(project.rootProject.file("gradle.properties").newDataInputSt
 def ROOT_POM_GROUP_ID = rootProperties.getProperty("POM_GOUP_ID")
 def ROOT_POM_URL = rootProperties.getProperty("POM_URL_NEW")
 def ROOT_POM_VERSION_NAME = rootProperties.getProperty("POM_VERSION_NAME")
+
+def UPLOAD_SOURCE = rootProperties.getProperty("UPLOAD_SOURCE")
+def UPLOAD_DOC = rootProperties.getProperty("UPLOAD_DOC")
 
 // 获取当前module下gradle.properties的配置
 Properties myProperties = new Properties()
@@ -21,69 +26,96 @@ println("uploadArchives >>> POM_VERSION_NAME = $POM_VERSION_NAME")
 println("uploadArchives >>> POM_ARTIFACT_ID = $POM_ARTIFACT_ID")
 println("")
 
+if (!project.plugins.hasPlugin(AppPlugin.class)
+        && !project.plugins.hasPlugin(LibraryPlugin.class)) {
+    apply plugin: 'java'
 
-task sourceJar(type: Jar, dependsOn: classes) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
+    task sourceJar(type: Jar, dependsOn: classes) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
-// 解决javadoc打包乱码
-javadoc {
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        author true
-        version true
-        title "文档大标题"
+    // 解决javadoc打包乱码
+    javadoc {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            author true
+            version true
+            title "文档大标题"
+        }
+    }
+}else{
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
     }
 }
 
-publishing {
-    publications {
-        SDK(MavenPublication) {
-            groupId = POM_GROUP_ID
-            artifactId = POM_ARTIFACT_ID
-            version = POM_VERSION_NAME
+afterEvaluate {
+    publishing {
+        publications {
+            SDK(MavenPublication) {
+                groupId = POM_GROUP_ID
+                artifactId = POM_ARTIFACT_ID
+                version = POM_VERSION_NAME
 
-            from components.java
+                if (project.plugins.hasPlugin(AppPlugin.class)
+                        || project.plugins.hasPlugin(LibraryPlugin.class)) {
+                    from components.release
 
-            if(false){
-                artifact sourceJar
-                artifact javadocJar
-            }
+                    if ("true" == UPLOAD_SOURCE) {
+                        artifact androidSourcesJar
+                    }
+                }else {
+                    from components.java
 
-            pom {
-                name = POM_ARTIFACT_ID
-                description = project.name
+                    if ("true" == UPLOAD_SOURCE) {
+                        artifact sourceJar
+                    }
+                    if ("true" == UPLOAD_DOC) {
+                        artifact javadocJar
+                    }
+                }
 
-                // 开发者信息
-                developers {
-                    developer {
-                        id = 'zbc'
-                        name = 'packcheng'
-                        email = 'packcheng_jo@outlook.com'
+                pom {
+                    name = POM_ARTIFACT_ID
+                    description = project.name
+
+                    // 开发者信息
+                    developers {
+                        developer {
+                            id = 'zbc'
+                            name = 'packcheng'
+                            email = 'packcheng_jo@outlook.com'
+                        }
                     }
                 }
             }
         }
     }
-}
 
 // 配置仓库
-publishing {
-    repositories {
-        maven {
-            name 'repo'
-            url uri(ROOT_POM_URL)
-        }
-        maven {
-            name 'repo2'
-            url uri(ROOT_POM_URL)
+    publishing {
+        repositories {
+            maven {
+                name 'repo'
+                url uri(ROOT_POM_URL)
+            }
+            maven {
+                name 'repo2'
+                url uri(ROOT_POM_URL)
+            }
         }
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
