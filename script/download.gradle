@@ -1,0 +1,96 @@
+import groovy.json.JsonSlurper
+
+// 使用插件下载内容
+
+apply plugin: 'de.undercouch.download'
+
+def LANGUAGE_KEY = "ETIOdStarFERIBLeVilitHaRDUshIVeR"
+def LANGUAGE_IP = "http://local.dinsafer.com/api/languages"
+
+// 定义下载文件路径
+def JSON_FILE = new File("$buildDir/local/local.json")
+def LANG_FILE = new File("$buildDir/local/local.lang")
+def TARGET_FILE = new File("$buildDir/new/")
+
+def GROUP = 'download'
+
+// 更新local
+task updateLocal(group: GROUP) {
+    doLast {
+        println('>>>> 准备下载更新local文件...')
+
+        // 1. 下载local.json
+        download.run {
+            src "$LANGUAGE_IP/$LANGUAGE_KEY"
+            dest JSON_FILE
+        }
+
+        if (null == JSON_FILE || !JSON_FILE.exists()) {
+            throw new RuntimeException("local.json文件不存在")
+        }
+
+        // 2. 解析local.json得到local.lang的下载地址
+        def json = new JsonSlurper().parse(JSON_FILE)
+        def CDNPath = json.CDNPath
+
+        // 3. 下载local.lang文件
+        println(">>>>>>> 准备下载的local.lang文件")
+        download.run {
+            src "$CDNPath"
+            dest LANG_FILE
+        }
+
+        if (null == LANG_FILE || !LANG_FILE.exists()) {
+            throw new RuntimeException("local.lang文件不存在")
+        }
+
+        // 4. 拷贝文件到指定路径
+        copy {
+            from JSON_FILE
+            into TARGET_FILE
+        }
+        copy {
+            from LANG_FILE
+            into TARGET_FILE
+        }
+        println(">>>>>>> local 文件更新完成")
+    }
+}
+
+/**
+ * 下载单个文件
+ * 如果哦文件存在，则不重复下载
+ */
+task downloadFile(type: Download, group: GROUP) {
+    src 'http://www.example.com/index.html'
+    dest buildDir
+    overwrite false
+}
+
+/**
+ * 下载单个文件
+ * 不管文件是否存在，都会重新下载
+ */
+task downloadSingleFile(type: Download, group: GROUP) {
+    src "$LANGUAGE_IP/$LANGUAGE_KEY"
+    dest "$buildDir/local/local.json"
+}
+
+/**
+ * 下载并解压文件
+ */
+task downloadAndUnzipFile(dependsOn: downloadZipFile, type: Copy, group: GROUP) {
+    from zipTree(downloadZipFile.dest)
+    into buildDir
+}
+
+/**
+ * 下载多个文件
+ */
+task downloadMultiFile(type: Download, group: GROUP) {
+    src([
+            "$LANGUAGE_IP/$LANGUAGE_KEY",
+            "$LANGUAGE_IP/$LANGUAGE_KEY"
+    ])
+    dest "$buildDir/local/"
+}
