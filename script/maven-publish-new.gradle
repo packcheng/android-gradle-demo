@@ -1,0 +1,89 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+// 获取根gradle.properties的公共配置
+Properties rootProperties = new Properties()
+rootProperties.load(project.rootProject.file("gradle.properties").newDataInputStream())
+def ROOT_POM_GROUP_ID = rootProperties.getProperty("POM_GOUP_ID")
+def ROOT_POM_URL = rootProperties.getProperty("POM_URL_NEW")
+def ROOT_POM_VERSION_NAME = rootProperties.getProperty("POM_VERSION_NAME")
+
+// 获取当前module下gradle.properties的配置
+Properties myProperties = new Properties()
+myProperties.load(project.file("gradle.properties").newDataInputStream())
+def POM_GROUP_ID = myProperties.getProperty("POM_GOUP_ID", ROOT_POM_GROUP_ID)
+def POM_ARTIFACT_ID = myProperties.getProperty("POM_ARTIFACT_ID")
+def POM_VERSION_NAME = myProperties.getProperty("POM_VERSION_NAME", ROOT_POM_VERSION_NAME)
+
+println("uploadArchives >>> POM_URL = $ROOT_POM_URL")
+println("uploadArchives >>> POM_GROUP_ID = $POM_GROUP_ID")
+println("uploadArchives >>> POM_VERSION_NAME = $POM_VERSION_NAME")
+println("uploadArchives >>> POM_ARTIFACT_ID = $POM_ARTIFACT_ID")
+println("")
+
+
+task sourceJar(type: Jar, dependsOn: classes) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// 解决javadoc打包乱码
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        title "文档大标题"
+    }
+}
+
+publishing {
+    publications {
+        SDK(MavenPublication) {
+            groupId = POM_GROUP_ID
+            artifactId = POM_ARTIFACT_ID
+            version = POM_VERSION_NAME
+
+            from components.java
+
+            if(false){
+                artifact sourceJar
+                artifact javadocJar
+            }
+
+            pom {
+                name = POM_ARTIFACT_ID
+                description = project.name
+
+                // 开发者信息
+                developers {
+                    developer {
+                        id = 'zbc'
+                        name = 'packcheng'
+                        email = 'packcheng_jo@outlook.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 配置仓库
+publishing {
+    repositories {
+        maven {
+            name 'repo'
+            url uri(ROOT_POM_URL)
+        }
+        maven {
+            name 'repo2'
+            url uri(ROOT_POM_URL)
+        }
+    }
+}
