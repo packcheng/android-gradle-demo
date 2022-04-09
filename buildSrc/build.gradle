@@ -1,5 +1,6 @@
 // 引用插件，编译插件工程中的代码
 apply plugin: "groovy"
+apply from:'../script/version-config.gradle'
 
 // 声明仓库的地址
 repositories {
@@ -12,10 +13,10 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
 
-    implementation 'org.ow2.asm:asm:7.1'
-    implementation 'org.ow2.asm:asm-util:7.1'
-    implementation 'org.ow2.asm:asm-commons:7.1'
-    implementation 'com.android.tools.build:gradle:4.1.0'
+    implementation "org.ow2.asm:asm:$asm_version"
+    implementation "org.ow2.asm:asm-util:$asm_version"
+    implementation "org.ow2.asm:asm-commons:$asm_version"
+    implementation "com.android.tools.build:gradle:$gradle_version"
 }
 
 // 调用maven插件，用于发布插件
