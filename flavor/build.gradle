@@ -67,6 +67,13 @@ android {
         }
     }
 
+//    // 统一配置
+//    productFlavors.all{flavor->
+//        manifestPlaceholders = [
+//                appName: name,
+//        ]
+//    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
