@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+// 增加使用腾讯vosdolly多渠道打包配置
+apply from:'../script/flavor_vosdolly.gradle'
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
