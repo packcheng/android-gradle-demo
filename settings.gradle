@@ -16,3 +16,4 @@ rootProject.name = "BuildDemo"
 
 // 构建生命周期监听
 //apply from: './script/build-listener.gradle'
+include ':fixme'
