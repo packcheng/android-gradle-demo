@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.packcheng.router",
+    "module": "router-processor",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "router-processor-1.0.0.jar",
+          "url": "router-processor-1.0.0.jar",
+          "size": 8469,
+          "sha512": "39a17594ed6eb5b7a6e515bbd63be816d17351c96e8aa2236a7adc6678c30abc69c9b9e96f23deec1933c3bd673b1e7948b362a2fad70b177f65e08fef36ad5d",
+          "sha256": "411af67ca10d12d6dcb64775d2a57ffaf964af3ff5b90d94e59b619760f65ae7",
+          "sha1": "78f550db42e609a052b697112249ad4d89fc20e8",
+          "md5": "929dc56e42d664f97b566736275b00b5"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.packcheng.router",
+          "module": "router-annotations",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "com.google.auto.service",
+          "module": "auto-service",
+          "version": {
+            "requires": "1.0-rc6"
+          }
+        },
+        {
+          "group": "com.squareup",
+          "module": "javapoet",
+          "version": {
+            "requires": "1.12.1"
+          }
+        },
+        {
+          "group": "org.apache.commons",
+          "module": "commons-lang3",
+          "version": {
+            "requires": "3.5"
+          }
+        },
+        {
+          "group": "org.apache.commons",
+          "module": "commons-collections4",
+          "version": {
+            "requires": "4.1"
+          }
+        },
+        {
+          "group": "com.alibaba",
+          "module": "fastjson",
+          "version": {
+            "requires": "1.2.48"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "router-processor-1.0.0.jar",
+          "url": "router-processor-1.0.0.jar",
+          "size": 8469,
+          "sha512": "39a17594ed6eb5b7a6e515bbd63be816d17351c96e8aa2236a7adc6678c30abc69c9b9e96f23deec1933c3bd673b1e7948b362a2fad70b177f65e08fef36ad5d",
+          "sha256": "411af67ca10d12d6dcb64775d2a57ffaf964af3ff5b90d94e59b619760f65ae7",
+          "sha1": "78f550db42e609a052b697112249ad4d89fc20e8",
+          "md5": "929dc56e42d664f97b566736275b00b5"
+        }
+      ]
+    }
+  ]
+}

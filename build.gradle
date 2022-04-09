@@ -9,7 +9,7 @@ buildscript {
 
         // 引入自己的插件仓库
         maven{
-            url uri('./repository')
+            url uri('./repo')
         }
 
         maven {
@@ -37,7 +37,7 @@ allprojects {
 
         // 引入自己的插件仓库
         maven{
-            url uri(rootProject.file("repository"))
+            url uri(rootProject.file("repo"))
         }
     }
 }

@@ -1,0 +1,97 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.packcheng.router",
+    "module": "router-gradle-plugin",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "router-gradle-plugin-1.0.0.jar",
+          "url": "router-gradle-plugin-1.0.0.jar",
+          "size": 38658,
+          "sha512": "5ced653f373acd3a23a3e6d736b6f462c461da7f8565fb9d1837d64b79de9255edc8ec906a5f2c4a6e85a7a2a92bcbab405eca02d1e4094e8699005d82ba1925",
+          "sha256": "fb98635854e73cd103ef679af93f0602bf145bd2daebcfe4924873bc8cadd86b",
+          "sha1": "f7dcf7460cace9e95943b159c90e6742c880d75e",
+          "md5": "6a91840d369d0cc5fcafdd6e5a0b85d6"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "commons-io",
+          "module": "commons-io",
+          "version": {
+            "requires": "2.4"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm-util",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm-commons",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle",
+          "version": {
+            "requires": "7.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "router-gradle-plugin-1.0.0.jar",
+          "url": "router-gradle-plugin-1.0.0.jar",
+          "size": 38658,
+          "sha512": "5ced653f373acd3a23a3e6d736b6f462c461da7f8565fb9d1837d64b79de9255edc8ec906a5f2c4a6e85a7a2a92bcbab405eca02d1e4094e8699005d82ba1925",
+          "sha256": "fb98635854e73cd103ef679af93f0602bf145bd2daebcfe4924873bc8cadd86b",
+          "sha1": "f7dcf7460cace9e95943b159c90e6742c880d75e",
+          "md5": "6a91840d369d0cc5fcafdd6e5a0b85d6"
+        }
+      ]
+    }
+  ]
+}

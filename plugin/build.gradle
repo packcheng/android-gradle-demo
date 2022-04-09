@@ -10,16 +10,16 @@ repositories {
     mavenCentral()
 }
 
-sourceSets{
-    main{
-        groovy{
-            srcDir 'src/main/groovy'
-        }
-        resources{
-            srcDir 'src/main/resources'
-        }
-    }
-}
+//sourceSets{
+//    main{
+//        groovy{
+//            srcDir 'src/main/groovy'
+//        }
+//        resources{
+//            srcDir 'src/main/resources'
+//        }
+//    }
+//}
 
 apply from: '../script/maven-publish.gradle'
 
@@ -27,7 +27,8 @@ afterEvaluate {
     project->
         project.tasks.each{
             task->
-                if("uploadArchives" == task.name){
+                if(task.name.startsWith("publish")
+                        && task.name.endsWith("Repository")){
                     task.doLast{
                         println('在 uploadArchives task 任务之后，删除本地build目录')
                         def pluginBuildDir = project.buildDir

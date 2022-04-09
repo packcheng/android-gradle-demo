@@ -1,0 +1,55 @@
+// 发布到本地仓库或远程仓库
+
+//apply plugin: 'maven'
+//
+//// 获取根gradle.properties的公共配置
+//Properties rootProperties = new Properties()
+//rootProperties.load(project.rootProject.file("gradle.properties").newDataInputStream())
+//def ROOT_POM_GROUP_ID = rootProperties.getProperty("POM_GOUP_ID")
+//def ROOT_POM_URL = rootProperties.getProperty("POM_URL")
+//def ROOT_POM_VERSION_NAME = rootProperties.getProperty("POM_VERSION_NAME")
+//
+//// 获取当前module下gradle.properties的配置
+//Properties myProperties = new Properties()
+//myProperties.load(project.file("gradle.properties").newDataInputStream())
+//def POM_GROUP_ID = myProperties.getProperty("POM_GOUP_ID", ROOT_POM_GROUP_ID)
+//def POM_ARTIFACT_ID = myProperties.getProperty("POM_ARTIFACT_ID")
+//def POM_VERSION_NAME = myProperties.getProperty("POM_VERSION_NAME", ROOT_POM_VERSION_NAME)
+//
+//println("uploadArchives >>> POM_URL = $ROOT_POM_URL")
+//println("uploadArchives >>> POM_GROUP_ID = $POM_GROUP_ID")
+//println("uploadArchives >>> POM_VERSION_NAME = $POM_VERSION_NAME")
+//println("uploadArchives >>> POM_ARTIFACT_ID = $POM_ARTIFACT_ID")
+//println("")
+//
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri(ROOT_POM_URL)) {
+//                pom.groupId = POM_GROUP_ID
+//                pom.artifactId = POM_ARTIFACT_ID
+//                pom.version = POM_VERSION_NAME
+//            }
+//
+//            pom.whenConfigured {
+//                pom.dependencies.forEach { dep ->
+//                    if (dep.getVersion() == "unspecified") {
+//                        dep.setGroupId(POM_GROUP_ID)
+//                        dep.setVersion(POM_VERSION_NAME)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+//以下代码会生成 jar 包源文件，如果是不开源码，请不要输入这段
+//aar包内包含注释
+//task androidSourcesJar(type: Jar) {
+//    classifier = 'sources'
+//    from android.sourceSets.main.java.sourceFiles
+//}
+//
+//artifacts {
+//    archives androidSourcesJar
+//}
