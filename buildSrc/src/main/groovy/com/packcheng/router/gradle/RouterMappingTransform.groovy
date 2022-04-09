@@ -2,7 +2,7 @@ package com.packcheng.router.gradle
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.android.utils.FileUtils
+import org.apache.commons.io.FileUtils
 
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
