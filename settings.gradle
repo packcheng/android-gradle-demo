@@ -1,11 +1,13 @@
 include ':flavor'
 include ':FileOperate'
 include ":plugin"
-include ":router-gradle-plugin"
 
 include ":routerapp"
+include ':routerlib'
 include ":router-annotations"
 include ":router-processor"
+include ':router-runtime'
+include ":router-gradle-plugin"
 
 rootProject.name = "BuildDemo"
 
@@ -14,5 +16,3 @@ rootProject.name = "BuildDemo"
 
 // 构建生命周期监听
 //apply from: './script/build-listener.gradle'
-include ':routerlib'
-include ':router-runtime'
