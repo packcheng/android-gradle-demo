@@ -27,6 +27,9 @@ buildscript {
 
         // 腾讯多渠道打包
         classpath "com.tencent.vasdolly:plugin:$vasdolly_version"
+
+        // 腾讯热修复
+        classpath "com.tencent.bugly:tinker-support:$tinker_support_version"
     }
 }
 
