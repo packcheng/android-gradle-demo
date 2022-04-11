@@ -4,6 +4,8 @@ plugins {
 
 // 增加使用腾讯vosdolly多渠道打包配置
 apply from:'../script/flavor_vosdolly.gradle'
+apply from:'../script/sign_config.gradle'
+apply from:'../script/360protect.gradle'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -22,10 +24,28 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    signingConfigs {
+        debug {
+            storeFile file(debug_key_path)
+            storePassword debug_storePassword
+            keyPassword debug_keyPassword
+            keyAlias = debug_keyAlias
+        }
+
+        release {
+            storeFile file(release_key_path)
+            storePassword release_storePassword
+            keyPassword release_keyPassword
+            keyAlias = release_keyAlias
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

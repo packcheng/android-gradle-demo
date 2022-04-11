@@ -1,1 +1,4 @@
 /build
+jiagu.db
+.cache
+log
