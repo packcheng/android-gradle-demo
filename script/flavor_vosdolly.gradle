@@ -31,7 +31,7 @@ rebuildChannel {
     //指定渠道文件
     channelFile = rootProject.file("./file/vosdolly_channel.txt")
     // 已有APK文件地址（必填）,如new File(project.rootDir, "/baseApk/app_base.apk"),文件名中的base将被替换为渠道名
-    baseApk = new File(project.buildDir,"/output/apk/release.apk")
+    baseApk = new File(project.buildDir,"/outputs/packers/routerapp-release_10_jiagu_sign.apk")
     //默认为new File(project.buildDir, "rebuildChannel")
     outputDir = new File(project.buildDir, "rebuildChannel")
     //快速模式：生成渠道包时不进行校验（速度可以提升10倍以上，默认为false）

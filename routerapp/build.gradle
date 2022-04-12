@@ -6,6 +6,7 @@ plugins {
 apply from:'../script/flavor_vosdolly.gradle'
 apply from:'../script/sign_config.gradle'
 apply from:'../script/360protect.gradle'
+apply from:'../script/jenkins_package.gradle'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
