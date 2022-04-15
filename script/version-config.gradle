@@ -29,6 +29,7 @@ ext {
     javapoet_version = '1.12.1'
     commons_lang3_version = '3.5'
     commons_io_version = '2.4'
+    commons_codec_version = '1.10'
     commons_collections4_version = '4.1'
     fastjson_version = '1.2.48'
     asm_version = '7.1'

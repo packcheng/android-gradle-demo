@@ -1,0 +1,5 @@
+apply plugin: 'com.packcheng.method-tracker'
+
+methodTracker {
+    enableTrack = true
+}

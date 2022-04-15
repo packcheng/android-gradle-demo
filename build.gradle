@@ -23,6 +23,7 @@ buildscript {
 
         // 引入自定义插件
         classpath "com.packcheng:my-plugin:$my_plugin_version"
+        classpath "com.packcheng.plugin:method-tracker-gradle-plugin:$my_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // 腾讯多渠道打包

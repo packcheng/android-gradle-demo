@@ -29,4 +29,8 @@ class KotlinActivity : AppCompatActivity() {
 
         mTvMsg!!.text = "name=$name, age=$age"
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

@@ -25,4 +25,9 @@ public class ReadingActivity extends AppCompatActivity {
         findViewById(R.id.btn_go_kotlin_page).setOnClickListener(v ->
                 ZbcRouter.INSTANCE.go(ReadingActivity.this, "router://kotlin?name=ReadingActivity&age=20"));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

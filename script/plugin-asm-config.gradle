@@ -1,0 +1,24 @@
+// 引用插件，编译插件工程中的代码
+apply plugin: "groovy"
+apply from:'../script/version-config.gradle'
+
+// 声明仓库的地址
+repositories {
+    google()
+    jcenter()
+}
+
+// 声明依赖包
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+
+    implementation "commons-codec:commons-codec:$commons_codec_version"
+    implementation "commons-io:commons-io:$commons_io_version"
+    implementation "org.ow2.asm:asm:$asm_version"
+    implementation "org.ow2.asm:asm-util:$asm_version"
+    implementation "org.ow2.asm:asm-commons:$asm_version"
+    implementation "com.android.tools.build:gradle:$gradle_version"
+}
+
+apply from: '../script/maven-publish.gradle'

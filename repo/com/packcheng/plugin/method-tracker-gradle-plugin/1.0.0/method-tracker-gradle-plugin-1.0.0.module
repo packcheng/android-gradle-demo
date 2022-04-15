@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.packcheng.plugin",
+    "module": "method-tracker-gradle-plugin",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "method-tracker-gradle-plugin-1.0.0.jar",
+          "url": "method-tracker-gradle-plugin-1.0.0.jar",
+          "size": 29204,
+          "sha512": "83c25e5cb7a196fe2319abe709600d52d1ec2137b3cfe42356e66c531d9185a42d1233b239697cc38b3373b3f7f287ef2774e768bd62ed7b77af84f3f2913598",
+          "sha256": "426ff73f604db3a9d097fe24967ad570dd630fc1e0cabb6b8b54487663d0e131",
+          "sha1": "d7bfa097d3cb85fb6c50d183597bc514ef0a44ad",
+          "md5": "74d0bbc138c225e2ff943d09c1df473f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.10"
+          }
+        },
+        {
+          "group": "commons-io",
+          "module": "commons-io",
+          "version": {
+            "requires": "2.4"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm-util",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm-commons",
+          "version": {
+            "requires": "7.1"
+          }
+        },
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle",
+          "version": {
+            "requires": "7.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "method-tracker-gradle-plugin-1.0.0.jar",
+          "url": "method-tracker-gradle-plugin-1.0.0.jar",
+          "size": 29204,
+          "sha512": "83c25e5cb7a196fe2319abe709600d52d1ec2137b3cfe42356e66c531d9185a42d1233b239697cc38b3373b3f7f287ef2774e768bd62ed7b77af84f3f2913598",
+          "sha256": "426ff73f604db3a9d097fe24967ad570dd630fc1e0cabb6b8b54487663d0e131",
+          "sha1": "d7bfa097d3cb85fb6c50d183597bc514ef0a44ad",
+          "md5": "74d0bbc138c225e2ff943d09c1df473f"
+        }
+      ]
+    }
+  ]
+}
