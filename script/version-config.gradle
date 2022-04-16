@@ -24,6 +24,7 @@ ext {
     espresso_core_version = '3.3.0'
     constraintlayout_version = '2.0.4'
     my_router_version = '1.0.0'
+    my_tracker_helper_version = '1.0.0'
     core_ktx_version = '1.2.0'
     auto_service_version = '1.0-rc6'
     javapoet_version = '1.12.1'

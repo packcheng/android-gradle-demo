@@ -3,10 +3,12 @@ package com.packcheng.method_tracker.gradle
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.packcheng.method_tracker.gradle.log.LifecycleClassVisitor
+import com.packcheng.method_tracker.gradle.timer.TimerClassVisitor
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
 
 import java.util.jar.JarFile
@@ -14,6 +16,9 @@ import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
 
 class MethodTrackerTransform extends Transform {
+    public static final TYPE_LOG = 0
+    public static final TYPE_TIMER = 1
+    public static final TYPE_TIMER_STACK = 2
 
     @Override
     String getName() {
@@ -62,11 +67,13 @@ class MethodTrackerTransform extends Transform {
     void handleDirectoryInput(DirectoryInput dirInput, TransformOutputProvider outputProvider) {
         if (dirInput.file.isDirectory()) {
             dirInput.file.eachFileRecurse { file ->
-                if (shouldModifyClass(file.absolutePath)) {
-                    println(" ---------------deal with class's class file: " + file.absolutePath)
+                if (showModifyClass(file.absolutePath)) {
+                    if (MethodTrackerPlugin.config.enableBuildLog) {
+                        println(" ---------------deal with class's class file: " + file.absolutePath)
+                    }
                     ClassReader classReader = new ClassReader(file.bytes)
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    LifecycleClassVisitor cv = new LifecycleClassVisitor(classWriter)
+                    ClassVisitor cv = createModifyClassVisitor(classWriter)
                     classReader.accept(cv, ClassReader.EXPAND_FRAMES)
                     byte[] codes = classWriter.toByteArray()
                     FileOutputStream fos = new FileOutputStream(file.parentFile.absolutePath + File.separator + file.name)
@@ -111,11 +118,13 @@ class MethodTrackerTransform extends Transform {
                 ZipEntry zipEntry = new ZipEntry(entryName)
                 InputStream inputStream = jarFile.getInputStream(zipEntry)
                 jarOutputStream.putNextEntry(zipEntry)
-                if (shouldModifyClass(entryName)) {
-                    println(" ---------------deal with jar's class file: " + entryName)
+                if (showModifyClass(entryName)) {
+                    if (MethodTrackerPlugin.config.enableBuildLog) {
+                        println(" ---------------deal with jar's class file: " + entryName)
+                    }
                     ClassReader classReader = new ClassReader(IOUtils.toByteArray(inputStream))
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    LifecycleClassVisitor cv = new LifecycleClassVisitor(classWriter)
+                    ClassVisitor cv = createModifyClassVisitor(classWriter)
                     classReader.accept(cv, ClassReader.EXPAND_FRAMES)
                     byte[] codes = classWriter.toByteArray()
                     jarOutputStream.write(codes)
@@ -134,9 +143,62 @@ class MethodTrackerTransform extends Transform {
         }
     }
 
-    boolean shouldModifyClass(String filePath) {
+    /**
+     * 当前路径是否包含需要修改的class
+     * @param filePath
+     * @return
+     */
+    boolean showModifyClass(String filePath) {
+        def TRACKER_TYPE = MethodTrackerPlugin.config.trackType
+        if (TYPE_LOG == TRACKER_TYPE) {
+            return shouldModifyLogClass(filePath)
+        } else if (TYPE_TIMER == TRACKER_TYPE
+                || TYPE_TIMER_STACK == TRACKER_TYPE) {
+            return shouldModifyTimerClass(filePath)
+        } else {
+            println(">>>>>>>>>>>>>>>> unSupport tracker type: $TRACKER_TYPE for transform ${getName()}")
+            return false
+        }
+    }
+
+    /**
+     * 创建class修改器
+     * @param cv
+     * @return
+     */
+    ClassVisitor createModifyClassVisitor(ClassVisitor cv) {
+        def TRACKER_TYPE = MethodTrackerPlugin.config.trackType
+        if (TYPE_LOG == TRACKER_TYPE) {
+            return new LifecycleClassVisitor(cv)
+        } else if (TYPE_TIMER == TRACKER_TYPE
+                || TYPE_TIMER_STACK == TRACKER_TYPE) {
+            return new TimerClassVisitor(cv)
+        }
+        return null
+    }
+
+    /**
+     * 当文件的路径符合一下规则时，表示该文件包含需要增加log的class
+     * @param filePath
+     * @return
+     */
+    boolean shouldModifyLogClass(String filePath) {
         return (filePath.contains("com/packcheng")
                 && filePath.endsWith("Activity.class")
+                && !filePath.contains("R.class")
+                && !filePath.contains('$')
+                && !filePath.contains('R$')
+                && !filePath.contains("BuildConfig.class"))
+    }
+
+    /**
+     * 当文件的路径符合一下规则时，表示该文件包含需要增加方法执行耗时统计的class
+     * @param filePath
+     * @return
+     */
+    boolean shouldModifyTimerClass(String filePath) {
+        return (filePath.contains("com/packcheng")
+                && filePath.endsWith(".class")
                 && !filePath.contains("R.class")
                 && !filePath.contains('$')
                 && !filePath.contains('R$')

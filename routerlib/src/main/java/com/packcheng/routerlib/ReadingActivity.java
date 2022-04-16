@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.packcheng.router.annotations.Destination;
 import com.packcheng.router.runtime.ZbcRouter;
+import com.packcheng.tracker.helper.annotation.ZbcTimerTracker;
 
 /**
  * @author packcheng <a href="mailto:packcheng_jo@outlook.com">Contact me.</a>
@@ -16,6 +17,7 @@ import com.packcheng.router.runtime.ZbcRouter;
 @Destination(url = "router://reading", description = "阅读页面")
 public class ReadingActivity extends AppCompatActivity {
 
+    @ZbcTimerTracker(desc = "ReadingActivity::onCreate")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

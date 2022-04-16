@@ -7,6 +7,8 @@ import org.gradle.api.Project
 
 class MethodTrackerPlugin implements Plugin<Project> {
 
+    public static MethodTrackerConfig config
+
     @Override
     void apply(Project target) {
         if (!target.plugins.hasPlugin(AppPlugin.class)) {
@@ -22,7 +24,10 @@ class MethodTrackerPlugin implements Plugin<Project> {
 
         // 根据配置决定是否启用transform
         target.afterEvaluate {
+            config = new MethodTrackerConfig()
             def ext = target.extensions.getByType(MethodTrackerExtension.class)
+            config.enableBuildLog = ext.enableBuildLog
+            config.trackType = ext.trackType
             if (!ext.enableTrack) {
                 target.tasks.findAll {
                     it.name.startsWith("transformClassesWithMethodTrackerTransformFor")

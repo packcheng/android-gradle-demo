@@ -41,6 +41,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junit_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
 
+    api "com.packcheng.plugin:tracker-helper:$my_tracker_helper_version"
     implementation "com.packcheng.router:router-annotations:$my_router_version"
     implementation "com.packcheng.router:router-runtime:$my_router_version"
     kapt "com.packcheng.router:router-processor:$my_router_version"

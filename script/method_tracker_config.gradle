@@ -2,4 +2,6 @@ apply plugin: 'com.packcheng.method-tracker'
 
 methodTracker {
     enableTrack = true
+    enableBuildLog = true
+    trackType = 2
 }
